@@ -8,7 +8,7 @@
       margin: 0;
       height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #ffd1dc, #cfd9e6, #fff1d6); /* Pastel gradient */
+      background: linear-gradient(135deg, #fff8dc, #fff3e0, #fff9c4);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -18,20 +18,26 @@
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.25);
       padding: 40px 30px;
       border-radius: 25px;
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
       max-width: 450px;
       width: 90%;
       position: relative;
+      cursor: pointer;
     }
 
     h1, p {
       margin-bottom: 20px;
       font-size: 2em;
       opacity: 0;
-      transition: opacity 1s ease;
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    h1.show, p.show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     button {
@@ -41,7 +47,7 @@
       border-radius: 30px;
       cursor: pointer;
       margin: 10px;
-      transition: transform 0.2s ease;
+      transition: transform 0.3s ease;
       position: relative;
       display: none;
     }
@@ -59,7 +65,7 @@
       background: white;
       color: #fbc02d;
       position: absolute;
-      transition: left 0.3s ease, top 0.3s ease;
+      transition: left 0.5s ease, top 0.5s ease;
     }
 
     .heart, .confetti {
@@ -94,43 +100,47 @@
       document.getElementById('slide2'),
       document.getElementById('slide3')
     ];
+    const card = document.getElementById('card');
     const yesBtn = document.querySelector('.yes');
     const noBtn = document.querySelector('.no');
+
     let currentSlide = 0;
 
     function showSlide(index) {
-      slides.forEach((s, i) => s.style.opacity = 0);
-      slides[index].style.opacity = 1;
+      slides.forEach((s,i) => s.classList.remove('show'));
+      slides[index].classList.add('show');
     }
 
-    function nextSlide() {
-      if (currentSlide < slides.length) {
-        showSlide(currentSlide);
+    showSlide(currentSlide);
+
+    // Click to advance slides
+    card.addEventListener('click', () => {
+      if(currentSlide < slides.length - 1){
         currentSlide++;
-        setTimeout(nextSlide, 2500); // 2.5s per slide
+        showSlide(currentSlide);
       } else {
         yesBtn.style.display = 'inline-block';
         noBtn.style.display = 'inline-block';
-        moveButton(); // start No button in random position
+        moveButton();
       }
-    }
-
-    nextSlide();
+    });
 
     function yesClicked() {
-      const card = document.getElementById('card');
       card.innerHTML = `
-        <h1>YAY!! 💛</h1>
-        <p>You make me feel so loved, happy, and complete every single day 🥰</p>
-        <p>Happy Valentine’s Day 🌸</p>
-        <p>I cherish every moment with you ❤️</p>
+        <h1 class="show">YAY!! 💛</h1>
+        <p class="show">You make me feel so loved, happy, and complete every single day 🥰</p>
+        <p class="show">I can’t wait to share our future together and make amazing memories 🌸</p>
+        <p class="show">I love you so much ❤️</p>
       `;
+      // Start magical celebration
       startConfetti();
       startHearts();
+      sparkleText(); // optional sparkle animation
     }
 
+    // Soft No button dodge
     function moveButton() {
-      const cardRect = document.getElementById('card').getBoundingClientRect();
+      const cardRect = card.getBoundingClientRect();
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
@@ -141,8 +151,9 @@
       noBtn.style.top = y + 'px';
     }
 
+    // Confetti animation
     function startConfetti() {
-      const colors = ['#ffb3ba','#ffdfba','#ffffba','#baffc9','#bae1ff','#e0bbff']; // pastel
+      const colors = ['#ffb3ba','#ffdfba','#ffffba','#baffc9','#bae1ff','#e0bbff'];
       for (let i = 0; i < 50; i++) {
         const confetti = document.createElement('div');
         confetti.classList.add('confetti');
@@ -150,26 +161,40 @@
         confetti.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
         confetti.style.width = confetti.style.height = Math.random() * 10 + 5 + 'px';
         document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 2000);
+        setTimeout(() => confetti.remove(), 3000);
       }
     }
 
+    // Hearts float from card center
     function startHearts() {
-      const colors = ['#ffb3ba','#ffdfba','#ffffba','#baffc9','#bae1ff','#e0bbff']; // pastel
-      const card = document.getElementById('card');
+      const colors = ['#ffb3ba','#ffdfba','#ffffba','#baffc9','#bae1ff','#e0bbff'];
       const cardRect = card.getBoundingClientRect();
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 50; i++) {
         const heart = document.createElement('div');
         heart.classList.add('heart');
         heart.innerHTML = '❤️';
-        heart.style.left = (cardRect.left + cardRect.width/2 + (Math.random()-0.5)*100) + 'px';
-        heart.style.top = (cardRect.top + cardRect.height/2 + (Math.random()-0.5)*50) + 'px';
+        heart.style.left = (cardRect.left + cardRect.width/2 + (Math.random()-0.5)*120) + 'px';
+        heart.style.top = (cardRect.top + cardRect.height/2 + (Math.random()-0.5)*60) + 'px';
         heart.style.color = colors[Math.floor(Math.random()*colors.length)];
-        heart.style.fontSize = (14 + Math.random()*10) + 'px';
+        heart.style.fontSize = (14 + Math.random()*14) + 'px';
+        heart.style.animationDuration = (2 + Math.random()*1.5) + 's';
+        heart.style.transform = `rotate(${Math.random()*360}deg)`;
         document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 2500 + Math.random()*500);
+        setTimeout(() => heart.remove(), 3000);
       }
     }
+
+    // Optional: sparkling text animation
+    function sparkleText() {
+      const texts = card.querySelectorAll('h1, p');
+      texts.forEach((t, index) => {
+        t.style.transition = 'opacity 0.5s ease, text-shadow 0.5s ease';
+        setInterval(() => {
+          t.style.textShadow = `0 0 ${Math.random()*10+5}px rgba(255,255,255,0.7)`;
+        }, 400 + index*100);
+      });
+    }
+
   </script>
 
 </body>
