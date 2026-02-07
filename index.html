@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Be My Valentine 💛</title>
+  <title>Be My Valentine</title>
   <style>
     body {
       margin: 0;
@@ -81,8 +81,6 @@
     }
 
     .confetti {
-      width: 5-10px;
-      height: 5-10px;
       animation: floatHeart 2.5s ease forwards;
     }
 
@@ -111,12 +109,12 @@
 <body>
 
   <div class="card" id="card">
-    <h1 id="slide1">Hey Jeremy 💛</h1>
-    <h1 id="slide2">I have something important to ask you…</h1>
-    <h1 id="slide3">Will you be my Valentine? 🌸</h1>
+    <h1 id="slide1">Hey Jeremy</h1>
+    <h1 id="slide2">There’s something I’ve been wanting to tell you</h1>
+    <h1 id="slide3">Will you be my Valentine?</h1>
     
-    <button class="yes" onclick="yesClicked()">Yes 💕</button>
-    <button class="no" onmouseover="moveButton()">No 😅</button>
+    <button class="yes" onclick="yesClicked()">Yes</button>
+    <button class="no" onmouseover="moveButton()">No</button>
   </div>
 
   <script>
@@ -152,11 +150,10 @@
 
     function yesClicked() {
       card.innerHTML = `
-        <h1 class="show">YAY!! 💛</h1>
-        <p class="show">Baby, you make me feel so loved, happy, and complete every day 🥰</p>
-        <p class="show">I can’t wait for all the memories we’ll make together in the future 🌸</p>
-        <p class="show">Tan-aw lubot bi. I miss eating you my baby, see you soonest 😘</p>
-        <p class="show">I love you so much ❤️</p>
+        <h1 class="show">YAYYY!!!</h1>
+        <p class="show">Tan-aw lubot bi. I miss you and I miss eating you, my baby. See you soonest.</p>
+        <p class="show">You make me feel so loved and complete every day, and I look forward to our future together.</p>
+        <p class="show">I love you always.</p>
       `;
       startConfetti();
       startHearts();
@@ -170,7 +167,7 @@
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
-      // softer dodge
+      // soft gentle dodge
       const x = Math.random() * (cardRect.width - btnWidth);
       const y = Math.random() * (cardRect.height - btnHeight);
 
