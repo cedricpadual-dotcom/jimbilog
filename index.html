@@ -14,6 +14,7 @@
       justify-content: center;
       text-align: center;
       color: white;
+      overflow: hidden;
     }
 
     .card {
@@ -23,6 +24,7 @@
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
       max-width: 420px;
       width: 90%;
+      position: relative;
     }
 
     h1 {
@@ -43,6 +45,7 @@
       cursor: pointer;
       margin: 10px;
       transition: transform 0.2s ease;
+      position: relative;
     }
 
     .yes {
@@ -58,6 +61,27 @@
       background: white;
       color: #ff4d6d;
       position: absolute;
+      transition: left 0.3s ease, top 0.3s ease;
+    }
+
+    /* Confetti styles */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #ffeb3b;
+      top: 0;
+      pointer-events: none;
+      opacity: 0.9;
+      border-radius: 50%;
+      animation: fall 2s linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(500px) rotate(360deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -73,21 +97,42 @@
   </div>
 
   <script>
+    const card = document.getElementById('card');
+    const noBtn = document.querySelector('.no');
+
     function yesClicked() {
-      document.getElementById("card").innerHTML = `
+      card.innerHTML = `
         <h1>YAY!! 💖</h1>
         <p>You just made me the happiest person alive 🥰</p>
         <p>Happy Valentine’s Day 💐</p>
         <p>I can’t wait to make more memories with you ❤️</p>
       `;
+      startConfetti();
     }
 
     function moveButton() {
-      const btn = document.querySelector('.no');
-      const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-      const y = Math.random() * (window.innerHeight - btn.offsetHeight);
-      btn.style.left = x + 'px';
-      btn.style.top = y + 'px';
+      const cardRect = card.getBoundingClientRect();
+      const btnWidth = noBtn.offsetWidth;
+      const btnHeight = noBtn.offsetHeight;
+
+      const x = Math.random() * (cardRect.width - btnWidth);
+      const y = Math.random() * (cardRect.height - btnHeight);
+
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    }
+
+    function startConfetti() {
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.backgroundColor = `hsl(${Math.random()*360}, 80%, 60%)`;
+        confetti.style.width = confetti.style.height = Math.random() * 10 + 5 + 'px';
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 2000);
+      }
     }
   </script>
 
