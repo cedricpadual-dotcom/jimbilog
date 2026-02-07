@@ -8,7 +8,7 @@
       margin: 0;
       height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #fff176, #ffd54f);
+      background: linear-gradient(135deg, #fff176, #ffd54f); /* Yellow theme */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -27,22 +27,11 @@
       position: relative;
     }
 
-    img {
-      width: 100%;
-      border-radius: 20px;
+    h1, p {
       margin-bottom: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      position: relative;
-    }
-
-    h1 {
-      margin-bottom: 10px;
-      font-size: 2.2em;
-    }
-
-    p {
-      font-size: 1.1em;
-      margin-bottom: 20px;
+      font-size: 2em;
+      opacity: 0;
+      transition: opacity 0.8s ease;
     }
 
     button {
@@ -54,6 +43,7 @@
       margin: 10px;
       transition: transform 0.2s ease;
       position: relative;
+      display: none;
     }
 
     .yes {
@@ -89,21 +79,42 @@
 <body>
 
   <div class="card" id="card">
-    <img src="https://www.canva.com/design/DAHAqYkKeDo/H4rqc19eQrpqupSZZhZ5NQ/edit?utm_content=DAHAqYkKeDo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" id="photo">
-    <h1>Hey, Jeremy💛</h1>
-    <p>I have something important to ask you…</p>
-    <h1>Will you be my Valentine? 🌻</h1>
-
+    <h1 id="slide1">Hey Jeremy 💛</h1>
+    <h1 id="slide2">I have something important to ask you…</h1>
+    <h1 id="slide3">Will you be my Valentine? 🌻</h1>
+    
     <button class="yes" onclick="yesClicked()">Yes 💕</button>
     <button class="no" onmouseover="moveButton()">No 😅</button>
   </div>
 
   <script>
-    const card = document.getElementById('card');
+    const slides = [
+      document.getElementById('slide1'),
+      document.getElementById('slide2'),
+      document.getElementById('slide3')
+    ];
+    const yesBtn = document.querySelector('.yes');
     const noBtn = document.querySelector('.no');
-    const photo = document.getElementById('photo');
+
+    let currentSlide = 0;
+
+    function showNextSlide() {
+      if (currentSlide < slides.length) {
+        slides[currentSlide].style.opacity = 1;
+        currentSlide++;
+        setTimeout(showNextSlide, 2000); // wait 2s before next slide
+      } else {
+        // Show buttons after last slide
+        yesBtn.style.display = 'inline-block';
+        noBtn.style.display = 'inline-block';
+        moveButton(); // position "No" button randomly at start
+      }
+    }
+
+    showNextSlide();
 
     function yesClicked() {
+      const card = document.getElementById('card');
       card.innerHTML = `
         <h1>YAY!! 💛</h1>
         <p>You make me feel so loved, happy, and complete every single day 🥰</p>
@@ -115,7 +126,7 @@
     }
 
     function moveButton() {
-      const cardRect = card.getBoundingClientRect();
+      const cardRect = document.getElementById('card').getBoundingClientRect();
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
@@ -143,9 +154,8 @@
         const heart = document.createElement('div');
         heart.classList.add('heart');
         heart.innerHTML = '❤️';
-        const photoRect = photo.getBoundingClientRect();
-        heart.style.left = (photoRect.left + Math.random() * photoRect.width) + 'px';
-        heart.style.top = (photoRect.top + Math.random() * photoRect.height) + 'px';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.top = Math.random() * window.innerHeight + 'px';
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 2000 + Math.random() * 1000);
       }
@@ -154,4 +164,3 @@
 
 </body>
 </html>
-
