@@ -8,12 +8,12 @@
       margin: 0;
       height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #fff176, #ffd54f); /* Yellow theme */
+      background: linear-gradient(135deg, #fff176, #ffd54f);
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: #5d4037; /* Dark text for contrast */
+      color: #5d4037;
       overflow: hidden;
     }
 
@@ -32,6 +32,7 @@
       border-radius: 20px;
       margin-bottom: 20px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      position: relative;
     }
 
     h1 {
@@ -71,31 +72,25 @@
       transition: left 0.3s ease, top 0.3s ease;
     }
 
-    /* Confetti / hearts */
-    .confetti {
+    .heart, .confetti {
       position: absolute;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      top: 0;
       pointer-events: none;
       opacity: 0.9;
-      animation: fall 2s linear forwards;
+      font-size: 16px;
+      animation: floatUp 2s linear forwards;
     }
 
-    @keyframes fall {
-      to {
-        transform: translateY(500px) rotate(360deg);
-        opacity: 0;
-      }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-300px) scale(1.5); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
   <div class="card" id="card">
-    <img src="https://drive.google.com/file/d/1r9e5gaBUcrkjoAQ0GLJ2xidi-6_OOz4n/view?usp=sharing" alt="Us Together">
-    <h1>Hey, Jeremy💛</h1>
+    <img src="https://drive.google.com/uc?export=view&id=1r9e5gaBUcrkjoAQ0GLJ2xidi-6_OOz4n" alt="Us Together" id="photo">
+    <h1>Hey, 💛</h1>
     <p>I have something important to ask you…</p>
     <h1>Will you be my Valentine? 🌻</h1>
 
@@ -106,6 +101,7 @@
   <script>
     const card = document.getElementById('card');
     const noBtn = document.querySelector('.no');
+    const photo = document.getElementById('photo');
 
     function yesClicked() {
       card.innerHTML = `
@@ -115,6 +111,7 @@
         <p>I cherish every moment with you ❤️</p>
       `;
       startConfetti();
+      startHearts();
     }
 
     function moveButton() {
@@ -134,15 +131,21 @@
         const confetti = document.createElement('div');
         confetti.classList.add('confetti');
         confetti.style.left = Math.random() * window.innerWidth + 'px';
-        confetti.style.backgroundColor = `hsl(${Math.random()*60 + 40}, 80%, 60%)`; // yellow/orange tones
+        confetti.style.backgroundColor = `hsl(${Math.random()*60 + 40}, 80%, 60%)`;
         confetti.style.width = confetti.style.height = Math.random() * 10 + 5 + 'px';
         document.body.appendChild(confetti);
         setTimeout(() => confetti.remove(), 2000);
       }
     }
-  </script>
 
-</body>
-</html>
-
-
+    function startHearts() {
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '❤️';
+        const photoRect = photo.getBoundingClientRect();
+        heart.style.left = (photoRect.left + Math.random() * photoRect.width) + 'px';
+        heart.style.top = (photoRect.top + Math.random() * photoRect.height) + 'px';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 2000 + Math.random() * 1000);
+      }
