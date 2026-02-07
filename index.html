@@ -2,34 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Be My Valentine 💘</title>
+  <title>Be My Valentine 💛</title>
   <style>
     body {
       margin: 0;
       height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      background: linear-gradient(135deg, #fff176, #ffd54f); /* Yellow theme */
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: white;
+      color: #5d4037; /* Dark text for contrast */
       overflow: hidden;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.2);
       padding: 40px 30px;
       border-radius: 25px;
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
-      max-width: 420px;
+      max-width: 450px;
       width: 90%;
       position: relative;
     }
 
+    img {
+      width: 100%;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
     h1 {
       margin-bottom: 10px;
-      font-size: 2.3em;
+      font-size: 2.2em;
     }
 
     p {
@@ -49,7 +56,7 @@
     }
 
     .yes {
-      background: #ff4d6d;
+      background: #fbc02d;
       color: white;
     }
 
@@ -59,21 +66,20 @@
 
     .no {
       background: white;
-      color: #ff4d6d;
+      color: #fbc02d;
       position: absolute;
       transition: left 0.3s ease, top 0.3s ease;
     }
 
-    /* Confetti styles */
+    /* Confetti / hearts */
     .confetti {
       position: absolute;
       width: 10px;
       height: 10px;
-      background-color: #ffeb3b;
+      border-radius: 50%;
       top: 0;
       pointer-events: none;
       opacity: 0.9;
-      border-radius: 50%;
       animation: fall 2s linear forwards;
     }
 
@@ -88,9 +94,10 @@
 <body>
 
   <div class="card" id="card">
-    <h1>Hey, Jeremy❤️</h1>
+    <img src="blob:https://www.facebook.com/b35665fd-59e4-46d1-9a11-b4b60e6093f1" alt="Us Together">
+    <h1>Hey, 💛</h1>
     <p>I have something important to ask you…</p>
-    <h1>Will you be my Valentine? 💐</h1>
+    <h1>Will you be my Valentine? 🌻</h1>
 
     <button class="yes" onclick="yesClicked()">Yes 💕</button>
     <button class="no" onmouseover="moveButton()">No 😅</button>
@@ -102,10 +109,10 @@
 
     function yesClicked() {
       card.innerHTML = `
-        <h1>YAY!! 💖</h1>
-        <p>You just made me the happiest person alive 🥰</p>
-        <p>Happy Valentine’s Day 💐</p>
-        <p>I can’t wait to make more memories with you ❤️</p>
+        <h1>YAY!! 💛</h1>
+        <p>You make me feel so loved, happy, and complete every single day 🥰</p>
+        <p>Happy Valentine’s Day 🌻</p>
+        <p>I cherish every moment with you ❤️</p>
       `;
       startConfetti();
     }
@@ -127,10 +134,9 @@
         const confetti = document.createElement('div');
         confetti.classList.add('confetti');
         confetti.style.left = Math.random() * window.innerWidth + 'px';
-        confetti.style.backgroundColor = `hsl(${Math.random()*360}, 80%, 60%)`;
+        confetti.style.backgroundColor = `hsl(${Math.random()*60 + 40}, 80%, 60%)`; // yellow/orange tones
         confetti.style.width = confetti.style.height = Math.random() * 10 + 5 + 'px';
         document.body.appendChild(confetti);
-
         setTimeout(() => confetti.remove(), 2000);
       }
     }
