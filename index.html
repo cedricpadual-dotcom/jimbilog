@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Be My Valentine 💘</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 40px 30px;
+      border-radius: 25px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+      max-width: 420px;
+      width: 90%;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2.3em;
+    }
+
+    p {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
+
+    button {
+      border: none;
+      padding: 14px 28px;
+      font-size: 1.1em;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    .yes {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    .yes:hover {
+      transform: scale(1.1);
+    }
+
+    .no {
+      background: white;
+      color: #ff4d6d;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <h1>Hey, Jeremy❤️</h1>
+    <p>I have something important to ask you…</p>
+    <h1>Will you be my Valentine? 💐</h1>
+
+    <button class="yes" onclick="yesClicked()">Yes 💕</button>
+    <button class="no" onmouseover="moveButton()">No 😅</button>
+  </div>
+
+  <script>
+    function yesClicked() {
+      document.getElementById("card").innerHTML = `
+        <h1>YAY!! 💖</h1>
+        <p>You just made me the happiest person alive 🥰</p>
+        <p>Happy Valentine’s Day 💐</p>
+        <p>I can’t wait to make more memories with you ❤️</p>
+      `;
+    }
+
+    function moveButton() {
+      const btn = document.querySelector('.no');
+      const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+      btn.style.left = x + 'px';
+      btn.style.top = y + 'px';
+    }
+  </script>
+
+</body>
+</html>
